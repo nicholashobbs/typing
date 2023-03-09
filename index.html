@@ -1,0 +1,90 @@
+<html>
+<head>
+<style>
+div {
+  background-color: green;
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  margin: 5px;
+  font-size: 24px;
+  text-align: center;
+}
+
+</style>
+<script>
+
+// create an array of the characters we need to track
+const characters = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\\', '`', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.'];
+
+document.addEventListener('keydown', function(event) {
+  const key = event.key;
+  // check if the character is in our array
+  if (characters.includes(key)) {
+    document.getElementById(key).style.backgroundColor = 'red';
+  }
+});
+
+document.addEventListener('keyup', function(event) {
+  const key = event.key;
+  // check if the character is in our array
+  if (characters.includes(key)) {
+    document.getElementById(key).style.backgroundColor = 'green';
+  }
+});
+
+</script>
+</head>
+<body>
+  <div id="1">1</div>
+  <div id="2">2</div>
+  <div id="3">3</div>
+  <div id="4">4</div>
+  <div id="5">5</div>
+  <div id="6">6</div>
+  <div id="7">7</div>
+  <div id="8">8</div>
+  <div id="9">9</div>
+  <div id="0">0</div>
+  <div id="-">-</div>
+  <div id="=">=</div>
+  <div id="\">\</div>
+  <div id="`">`</div>
+  
+  <br />
+  <div id="q">q</div>
+  <div id="w">w</div>
+  <div id="e">e</div>
+  <div id="r">r</div>
+  <div id="t">t</div>
+  <div id="y">y</div>
+  <div id="u">u</div>
+  <div id="i">i</div>
+  <div id="o">o</div>
+  <div id="p">p</div>
+  <div id="[">[</div>
+  <div id="]">]</div>
+  <br />
+  <div id="a">a</div>
+  <div id="s">s</div>
+  <div id="d">d</div>
+  <div id="f">f</div>
+  <div id="g">g</div>
+  <div id="h">h</div>
+  <div id="j">j</div>
+  <div id="k">k</div>
+  <div id="l">l</div>
+  <div id=";">;</div>
+  <div id="'">'</div>
+  <br />
+  <div id="z">z</div>
+  <div id="x">x</div>
+  <div id="c">c</div>
+  <div id="v">v</div>
+  <div id="b">b</div>
+  <div id="n">n</div>
+  <div id="m">m</div>
+  <div id=",">,</div>
+  <div id=".">.</div>
+</body>
+</html>
