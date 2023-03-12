@@ -10,70 +10,99 @@
   <canvas id="myCanvas" width="400" height="400"></canvas>
   <div id="positions"></div>
   <div id="oldestElement"></div>
+  <div id="score"></div>
   <script>
-    
 // Variables
 const canvas = document.getElementById("myCanvas");
-    const ctx = canvas.getContext("2d");
-    ctx.font = "30px Arial";
-    const elements = ["a", "s", "d", "f"];
-    let data = [];
-    let yPos = 0;
-    let positionDiv = document.getElementById('positions');
-    let oldestElementDiv = document.getElementById('oldestElement');
+const ctx = canvas.getContext("2d");
+ctx.font = "30px Arial";
+const elements = ["a", "s", "d", "f"];
+let data = [];
+let yPos = 0;
+let score = 0;
+let positionDiv = document.getElementById('positions');
+let oldestElementDiv = document.getElementById('oldestElement');
+let scoreDiv = document.getElementById('score');
+let oldestElement = null;
+let deleteOldestElement = false;
+let eventListener = null;
 
-    // Functions
-    function drawElement() {
-        const xPos = Math.floor(Math.random() * canvas.width);
-        const element = elements[Math.floor(Math.random() * elements.length)];
-        data.push({xPos, yPos, element});
-        ctx.fillText(element, xPos, yPos);
+// Functions
+function drawElement() {
+    const xPos = Math.floor(Math.random() * canvas.width);
+    const element = elements[Math.floor(Math.random() * elements.length)];
+    if (element === oldestElement) {
+        yPos = oldestElement.yPos;
     }
+    data.push({xPos, yPos, element});
+    ctx.fillText(element, xPos, yPos);
+}
 
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawElement();
-        setTimeout(draw, 3000);
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawElement();
+    setTimeout(draw, 3000);
+}
+draw();
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  let positions = [];
+
+  // Check if oldestElement is defined
+  if (data.length > 0) {
+      oldestElement = data[0];
+  }
+
+  for(let i = 0; i < data.length; i++) {
+    let item = data[i];
+    positions.push(`Element: ${item.element} X: ${item.xPos} Y: ${item.yPos}`);
+    item.yPos += 3;
+    if (item.yPos > canvas.height) {
+      ctx.clearRect(item.xPos, item.yPos, canvas.width, canvas.height);
+      // Set flag to delete oldest element
+      deleteOldestElement = true;
+      // Decrement score
+      score--;
+    } else {
+      ctx.fillText(item.element, item.xPos, item.yPos);
     }
-    draw();
+  }
 
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      let positions = [];
-      let oldestElement = data[0];
-      for(let i = 0; i < data.length; i++) {
-        let item = data[i];
-        positions.push(`Element: ${item.element} X: ${item.xPos} Y: ${item.yPos}`);
-        item.yPos += 3;
-        if (item.yPos > canvas.height) {
-          ctx.clearRect(item.xPos, item.yPos, canvas.width, canvas.height);
-          data.splice(i, 1);
-        } else {
-          ctx.fillText(item.element, item.xPos, item.yPos);
-        }
-      }
-      positionDiv.innerHTML = positions.join('<br />');
-      
-      // Check if oldestElement is defined
-      if (oldestElement) {
-        oldestElementDiv.innerHTML = `Next letter: ${oldestElement.element}`;
-      } else {
-        oldestElementDiv.innerHTML = "";
-      }
+  // Delete oldest element if flag is set
+  if (deleteOldestElement) {
+    data.shift();
+    deleteOldestElement = false;
+  }
 
-      setTimeout(animate, 100);
+  positionDiv.innerHTML = positions.join('<br />');
+  scoreDiv.innerHTML = `Score: ${score}`;
+  
+  // Check if oldestElement is defined
+  if (oldestElement) {
+    oldestElementDiv.innerHTML = `Next letter: ${oldestElement.element}`;
+  } else {
+    oldestElementDiv.innerHTML = "";
+  }
 
-      document.addEventListener('keydown', e => {
-        // Check if oldestElement is defined
-        if (oldestElement && e.key === oldestElement.element){
-          ctx.clearRect(oldestElement.xPos, 0, canvas.width, canvas.height);
-          data.shift();
-          yPos = 0;
-          console.log(`Detroyed element with key ${oldestElement.element}`);
-        }
-      });
-    }
-    animate();
+  setTimeout(animate, 100);
+}
+
+// Add event listener to document
+eventListener = document.addEventListener('keydown', e => {
+  // Check if oldestElement is defined
+  if (oldestElement && e.key === oldestElement.element){
+    // Find the index of the oldest element in the array
+    let index = data.indexOf(oldestElement);
+    // surgically remove the element corresponding to oldestelement in the array
+    data.splice(index, 1);
+    yPos = 0;
+    score++;
+    console.log(`Detroyed element with key ${oldestElement.element}`);
+    document.removeEventListener('keydown', eventListener);
+  }
+});
+animate();
   </script>
 </body>
 
