@@ -1,0 +1,41 @@
+<html>
+    <head>
+      <style>
+        body {
+          background: black;
+        }
+        #matrix {
+          position: absolute;
+          color: green;
+        }
+      </style>
+    </head>
+    <body>
+      <div id="matrix"></div>
+  
+      <script>
+        let matrix = document.getElementById("matrix");
+  
+        let xPos = 0;
+        let yPos = 0;
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+  
+        let step = function() {
+          matrix.innerHTML = '';
+          for (let i = 0; i < width; i += 200) {
+            matrix.innerHTML += 'test ';
+          }
+          matrix.style.top = yPos + 'px';
+          matrix.style.left = xPos + 'px';
+          yPos += 2;
+          xPos = Math.floor(Math.random() * window.innerWidth);
+          if (yPos < window.innerHeight) {
+            setTimeout(step, 5);
+          }
+        };
+  
+        step();
+      </script>
+    </body>
+    </html>

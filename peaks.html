@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Wavesurfer.js Example: Play Local .wav File</title>
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+  </head>
+  <body>
+    <h1>Play Local .wav File</h1>
+    <div id="waveform"></div>
+    <button id="play">Play</button>
+    <button id="pause">Pause</button>
+    <script>
+      var wavesurfer = WaveSurfer.create({
+        container: '#waveform',
+        waveColor: 'violet',
+        progressColor: 'purple'
+      });
+      wavesurfer.load('test.wav');
+      var playButton = document.getElementById('play');
+      playButton.addEventListener('click', function() {
+        wavesurfer.playPause();
+      });
+      var pauseButton = document.getElementById('pause');
+      pauseButton.addEventListener('click', function() {
+        wavesurfer.pause();
+      });
+    </script>
+  </body>
+</html>

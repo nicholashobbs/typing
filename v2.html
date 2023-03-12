@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="1000" height="500"
+style="border:1px solid #c3c3c3;">
+Your browser does not support the canvas element.
+</canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "#FF0000";
+
+var keyboard = [
+  [['1', 1], ['2', 1], ['3', 1], ['4', 1], ['5', 1], ['6', 1], ['7', 1], ['8', 1], ['9', 1], ['0', 1], ['-', 1], ['=', 1], ['\\', 1], ['`', 1]],
+  [['q', 1], ['w', 1], ['e', 1], ['r', 1], ['t', 1], ['y', 1], ['u', 1], ['i', 1], ['o', 1], ['p', 1], ['[', 1], [']', 1]],
+  [['a', 1], ['s', 1], ['d', 1], ['f', 1], ['g', 1], ['h', 1], ['j', 1], ['k', 1], ['l', 1], [';', 1], ["'", 1]],
+  [['z', 1], ['x', 1], ['c', 1], ['v', 1], ['b', 1], ['n', 1], ['m', 1], [',', 1], ['.', 1], ['/', 1]]
+];
+
+ctx.font = "30px Arial";
+
+
+for (let i = 0; i < keyboard.length; i++) {
+  for (let j = 0; j < keyboard[i].length; j++) {
+    console.log(keyboard[i][j][0], i, j);
+    ctx.fillText(keyboard[i][j][0], 10 + j * 30, 70 + i * 30);
+  }
+}
+
+document.addEventListener('keydown', function(e) {
+  let key = e.key;
+  for (let i = 0; i < keyboard.length; i++) {
+    for (let j = 0; j < keyboard[i].length; j++) {
+      if (key === keyboard[i][j][0]) {
+        ctx.fillStyle = "#00FF00";
+        ctx.fillText(keyboard[i][j][0], 10 + j * 30, 70 + i * 30);
+      }
+    }
+  }
+});
+
+document.addEventListener('keyup', function(e) {
+  let key = e.key;
+  for (let i = 0; i < keyboard.length; i++) {
+    for (let j = 0; j < keyboard[i].length; j++) {
+      if (key === keyboard[i][j][0]) {
+        ctx.fillStyle = "#FF0000";
+        ctx.fillText(keyboard[i][j][0], 10 + j * 30, 70 + i * 30);
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

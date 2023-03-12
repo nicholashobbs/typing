@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>Random Letter Generator</title>
+        
+    </head>
+    <body>
+        <canvas id="myCanvas" width="500" height="500"></canvas>
+    </body>
+
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        if (canvas.getContext) {
+            var ctx = canvas.getContext("2d");
+            var letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+            ctx.font = "30px Arial";
+            setInterval(function(){
+                var index = Math.floor(Math.random() * letters.length);
+                var letter = letters[index];
+                var x = Math.floor(Math.random() * canvas.width);
+                var y = Math.floor(Math.random() * canvas.height);
+                ctx.fillText(letter, x, y);
+            }, 1000);
+        }
+    </script>
+</html>
